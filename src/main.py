@@ -1,8 +1,16 @@
-import pypyodbc as podbc    
+import os
+import pypyodbc as podbc   
+import pandas as pd 
+import warnings
+warnings.filterwarnings('ignore')
 
 # Connecting to local server.
-connection = podbc.connect("Driver={SQL Server native Client 11.0};"
-                      "Server=THE-FATHER\SQLEXPRESS;"
-                      "Database=MMA Stats;"
-                      "Trusted_Connection=yes;")
+con = podbc.connect("Driver={ODBC Driver 18 for SQL Server};"
+                    "SERVER=THE-FATHER\SQLEXPRESS;"
+                    "DATABASE=MMA-Stats;"
+                    "Trusted_Connection=yes;"
+                    "TrustServerCertificate=yes")
 
+SQL_Query = pd.read_sql_query('''SELECT * FROM [dbo].[ufc-fighters-statistics]''', con)
+
+SQL_Query.head()
